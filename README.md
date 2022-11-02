@@ -12,12 +12,18 @@
 #### 執行檔下載(約為97MB)：<https://drive.google.com/file/d/1WJ4aXkFulhoBS4PaZZc39lMcqWj2pXrb/view?usp=sharing>
 #### 
 
-  
+##  
   
 $\qquad$本身為程式新手，一開始開啟Visual Studio，根本不知道該怎麼使用環境和檔案配置。當然，現在也是一樣。
 因此，我就僅上傳我認為較需要的code及檔案至github。如果有要在Visual Studio修改程式的話，則需再新建一個專案並將其import。
+   
   
+### 參考(Reference)： 
+[1] [Modern Flat UI, Random MultiColor, Highlight button-Active Form, WinForm, C#, V-0.1](https://youtu.be/BtOEztT1Qzk), RJ Code Advance EN  
+[2] [Emgucv # 24: How to crop an image using mouse selection in Emgu CV](https://youtu.be/n4mjLiMiSmw), AKHTAR JAMIL
   
+##  
+
 - 預覽圖：
 <img src="./HBImageProcessor_preview.png">
 
