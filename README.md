@@ -1,13 +1,13 @@
 # HBImageProcessor
 
 ## 簡介：
-\qquad使用C#寫成的Windows Forms應用程式。程式主要功能如名字所示，為圖片處理。  
+$\qquad$使用C#寫成的Windows Forms應用程式。程式主要功能如名字所示，為圖片處理。  
 目前功能不多，以下為可使用的處理方法：  
 - 將圖轉為灰階、顏色反轉及圖片翻轉
 - 圖片裁切
 - 調整對比度，以及Gamma校正
   
-\qquad
+$\qquad$
 
 ---
 
