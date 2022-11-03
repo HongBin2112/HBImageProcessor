@@ -40,8 +40,11 @@
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBoxOperation = new System.Windows.Forms.GroupBox();
             this.panelOperationBtns = new System.Windows.Forms.Panel();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.panelBtnsIndex = new System.Windows.Forms.Panel();
+            this.buttonPrevious = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
             this.btnConverted = new System.Windows.Forms.Button();
             this.panelOptions = new System.Windows.Forms.Panel();
             this.groupBoxGamma = new System.Windows.Forms.GroupBox();
@@ -53,21 +56,23 @@
             this.imageBox_input = new Emgu.CV.UI.ImageBox();
             this.pazPictureBox_converted = new Emgu.CV.UI.PanAndZoomPictureBox();
             this.panelLeft = new System.Windows.Forms.Panel();
-            this.btnExit = new System.Windows.Forms.Button();
             this.panelInfos = new System.Windows.Forms.Panel();
             this.labelOutputFolder = new System.Windows.Forms.Label();
             this.labelOutputSize = new System.Windows.Forms.Label();
             this.labelSize = new System.Windows.Forms.Label();
             this.labelName = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.panelTop = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.labelMin = new System.Windows.Forms.Label();
             this.labelEnlarge = new System.Windows.Forms.Label();
             this.labelClose = new System.Windows.Forms.Label();
-            this.labelLeftTop = new System.Windows.Forms.Label();
+            this.panelMenu = new System.Windows.Forms.Panel();
+            this.btnMenu = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBoxOperation.SuspendLayout();
             this.panelOperationBtns.SuspendLayout();
+            this.panelBtnsIndex.SuspendLayout();
             this.panelOptions.SuspendLayout();
             this.groupBoxGamma.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGamma)).BeginInit();
@@ -81,7 +86,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pazPictureBox_converted)).BeginInit();
             this.panelLeft.SuspendLayout();
             this.panelInfos.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.panelTop.SuspendLayout();
+            this.panelMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -170,7 +176,7 @@
             this.groupBoxOperation.Name = "groupBoxOperation";
             this.groupBoxOperation.Padding = new System.Windows.Forms.Padding(0);
             this.groupBoxOperation.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBoxOperation.Size = new System.Drawing.Size(280, 423);
+            this.groupBoxOperation.Size = new System.Drawing.Size(280, 471);
             this.groupBoxOperation.TabIndex = 6;
             this.groupBoxOperation.TabStop = false;
             this.groupBoxOperation.Text = "Operation";
@@ -179,16 +185,69 @@
             // 
             this.panelOperationBtns.AutoScroll = true;
             this.panelOperationBtns.AutoSize = true;
+            this.panelOperationBtns.Controls.Add(this.panelBtnsIndex);
             this.panelOperationBtns.Controls.Add(this.btnSave);
-            this.panelOperationBtns.Controls.Add(this.btnNext);
+            this.panelOperationBtns.Controls.Add(this.btnRemove);
             this.panelOperationBtns.Controls.Add(this.btnConverted);
             this.panelOperationBtns.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelOperationBtns.ForeColor = System.Drawing.Color.Gainsboro;
             this.panelOperationBtns.Location = new System.Drawing.Point(0, 279);
             this.panelOperationBtns.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.panelOperationBtns.Name = "panelOperationBtns";
-            this.panelOperationBtns.Size = new System.Drawing.Size(280, 144);
+            this.panelOperationBtns.Size = new System.Drawing.Size(280, 192);
             this.panelOperationBtns.TabIndex = 10;
+            // 
+            // panelBtnsIndex
+            // 
+            this.panelBtnsIndex.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panelBtnsIndex.Controls.Add(this.buttonPrevious);
+            this.panelBtnsIndex.Controls.Add(this.btnNext);
+            this.panelBtnsIndex.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelBtnsIndex.Location = new System.Drawing.Point(0, 144);
+            this.panelBtnsIndex.Margin = new System.Windows.Forms.Padding(0);
+            this.panelBtnsIndex.Name = "panelBtnsIndex";
+            this.panelBtnsIndex.Size = new System.Drawing.Size(280, 48);
+            this.panelBtnsIndex.TabIndex = 11;
+            // 
+            // buttonPrevious
+            // 
+            this.buttonPrevious.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.buttonPrevious.Dock = System.Windows.Forms.DockStyle.Left;
+            this.buttonPrevious.FlatAppearance.BorderSize = 0;
+            this.buttonPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPrevious.ForeColor = System.Drawing.Color.Gainsboro;
+            this.buttonPrevious.Image = global::HBImageProcessor.Properties.Resources.previous;
+            this.buttonPrevious.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonPrevious.Location = new System.Drawing.Point(0, 0);
+            this.buttonPrevious.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonPrevious.Name = "buttonPrevious";
+            this.buttonPrevious.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.buttonPrevious.Size = new System.Drawing.Size(140, 48);
+            this.buttonPrevious.TabIndex = 9;
+            this.buttonPrevious.Text = "Previous";
+            this.buttonPrevious.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonPrevious.UseVisualStyleBackColor = false;
+            this.buttonPrevious.Click += new System.EventHandler(this.buttonPrevious_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.btnNext.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnNext.FlatAppearance.BorderSize = 0;
+            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNext.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnNext.Image = global::HBImageProcessor.Properties.Resources.next;
+            this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnNext.Location = new System.Drawing.Point(140, 0);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(0);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Padding = new System.Windows.Forms.Padding(20, 0, 10, 0);
+            this.btnNext.Size = new System.Drawing.Size(140, 48);
+            this.btnNext.TabIndex = 8;
+            this.btnNext.Text = "Next";
+            this.btnNext.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNext.UseVisualStyleBackColor = false;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // btnSave
             // 
@@ -209,24 +268,24 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // btnNext
+            // btnRemove
             // 
-            this.btnNext.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.btnNext.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnNext.FlatAppearance.BorderSize = 0;
-            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNext.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btnNext.Image = global::HBImageProcessor.Properties.Resources.next;
-            this.btnNext.Location = new System.Drawing.Point(0, 48);
-            this.btnNext.Margin = new System.Windows.Forms.Padding(0);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(280, 48);
-            this.btnNext.TabIndex = 8;
-            this.btnNext.Text = "Next";
-            this.btnNext.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnNext.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.btnNext.UseVisualStyleBackColor = false;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            this.btnRemove.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.btnRemove.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnRemove.FlatAppearance.BorderSize = 0;
+            this.btnRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRemove.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnRemove.Image = global::HBImageProcessor.Properties.Resources.image_remove;
+            this.btnRemove.Location = new System.Drawing.Point(0, 48);
+            this.btnRemove.Margin = new System.Windows.Forms.Padding(0);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(280, 48);
+            this.btnRemove.TabIndex = 12;
+            this.btnRemove.Text = "Remove";
+            this.btnRemove.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRemove.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnRemove.UseVisualStyleBackColor = false;
+            this.btnRemove.Click += new System.EventHandler(this.buttonRemove_Click);
             // 
             // btnConverted
             // 
@@ -281,7 +340,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarGamma.Location = new System.Drawing.Point(3, 24);
-            this.trackBarGamma.Maximum = 100;
+            this.trackBarGamma.Maximum = 200;
             this.trackBarGamma.Minimum = 1;
             this.trackBarGamma.Name = "trackBarGamma";
             this.trackBarGamma.Size = new System.Drawing.Size(274, 45);
@@ -404,33 +463,15 @@
             this.panelLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panelLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.panelLeft.Controls.Add(this.btnExit);
             this.panelLeft.Controls.Add(this.groupBoxOperation);
             this.panelLeft.Controls.Add(this.panelInfos);
+            this.panelLeft.Controls.Add(this.btnExit);
             this.panelLeft.ForeColor = System.Drawing.Color.Gainsboro;
             this.panelLeft.Location = new System.Drawing.Point(0, 70);
             this.panelLeft.Margin = new System.Windows.Forms.Padding(0);
             this.panelLeft.Name = "panelLeft";
             this.panelLeft.Size = new System.Drawing.Size(280, 741);
             this.panelLeft.TabIndex = 8;
-            // 
-            // btnExit
-            // 
-            this.btnExit.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnExit.FlatAppearance.BorderSize = 0;
-            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btnExit.Image = global::HBImageProcessor.Properties.Resources.power_off;
-            this.btnExit.Location = new System.Drawing.Point(0, 681);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(0);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(280, 60);
-            this.btnExit.TabIndex = 10;
-            this.btnExit.Text = "Exit";
-            this.btnExit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnExit.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // panelInfos
             // 
@@ -520,20 +561,39 @@
             this.labelName.MouseEnter += new System.EventHandler(this.ChangeBackgroundColor_MouseEnter);
             this.labelName.MouseLeave += new System.EventHandler(this.ChangeBackgroundColor_MouseLeave);
             // 
-            // panel1
+            // btnExit
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(134)))), ((int)(((byte)(138)))));
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.labelMin);
-            this.panel1.Controls.Add(this.labelEnlarge);
-            this.panel1.Controls.Add(this.labelClose);
-            this.panel1.Controls.Add(this.labelLeftTop);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1344, 70);
-            this.panel1.TabIndex = 1;
+            this.btnExit.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnExit.FlatAppearance.BorderSize = 0;
+            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExit.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnExit.Image = global::HBImageProcessor.Properties.Resources.power_off;
+            this.btnExit.Location = new System.Drawing.Point(0, 681);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(0);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(280, 60);
+            this.btnExit.TabIndex = 10;
+            this.btnExit.Text = "Exit";
+            this.btnExit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnExit.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Visible = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // panelTop
+            // 
+            this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(134)))), ((int)(((byte)(138)))));
+            this.panelTop.Controls.Add(this.label1);
+            this.panelTop.Controls.Add(this.labelMin);
+            this.panelTop.Controls.Add(this.labelEnlarge);
+            this.panelTop.Controls.Add(this.labelClose);
+            this.panelTop.Controls.Add(this.panelMenu);
+            this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelTop.Location = new System.Drawing.Point(0, 0);
+            this.panelTop.Margin = new System.Windows.Forms.Padding(0);
+            this.panelTop.Name = "panelTop";
+            this.panelTop.Size = new System.Drawing.Size(1344, 70);
+            this.panelTop.TabIndex = 1;
             // 
             // label1
             // 
@@ -578,17 +638,33 @@
             this.labelClose.TabIndex = 13;
             this.labelClose.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // labelLeftTop
+            // panelMenu
             // 
-            this.labelLeftTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(38)))), ((int)(((byte)(57)))));
-            this.labelLeftTop.Dock = System.Windows.Forms.DockStyle.Left;
-            this.labelLeftTop.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelLeftTop.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.labelLeftTop.Location = new System.Drawing.Point(0, 0);
-            this.labelLeftTop.Name = "labelLeftTop";
-            this.labelLeftTop.Size = new System.Drawing.Size(280, 70);
-            this.labelLeftTop.TabIndex = 12;
-            this.labelLeftTop.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(38)))), ((int)(((byte)(57)))));
+            this.panelMenu.Controls.Add(this.btnMenu);
+            this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelMenu.Location = new System.Drawing.Point(0, 0);
+            this.panelMenu.Margin = new System.Windows.Forms.Padding(0);
+            this.panelMenu.Name = "panelMenu";
+            this.panelMenu.Size = new System.Drawing.Size(280, 70);
+            this.panelMenu.TabIndex = 18;
+            // 
+            // btnMenu
+            // 
+            this.btnMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnMenu.AutoSize = true;
+            this.btnMenu.BackgroundImage = global::HBImageProcessor.Properties.Resources.menu_a;
+            this.btnMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnMenu.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMenu.FlatAppearance.BorderSize = 0;
+            this.btnMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenu.Location = new System.Drawing.Point(13, 12);
+            this.btnMenu.Margin = new System.Windows.Forms.Padding(0);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(47, 42);
+            this.btnMenu.TabIndex = 17;
+            this.btnMenu.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -599,7 +675,7 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(1344, 811);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panelTop);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panelLeft);
             this.Controls.Add(this.menuStrip1);
@@ -615,6 +691,7 @@
             this.groupBoxOperation.ResumeLayout(false);
             this.groupBoxOperation.PerformLayout();
             this.panelOperationBtns.ResumeLayout(false);
+            this.panelBtnsIndex.ResumeLayout(false);
             this.panelOptions.ResumeLayout(false);
             this.groupBoxGamma.ResumeLayout(false);
             this.groupBoxGamma.PerformLayout();
@@ -632,8 +709,10 @@
             this.panelLeft.ResumeLayout(false);
             this.panelLeft.PerformLayout();
             this.panelInfos.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panelTop.ResumeLayout(false);
+            this.panelTop.PerformLayout();
+            this.panelMenu.ResumeLayout(false);
+            this.panelMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -669,12 +748,16 @@
         private System.Windows.Forms.Panel panelOptions;
         private System.Windows.Forms.Panel panelInfos;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Panel panel1;
-        private Label labelLeftTop;
+        private System.Windows.Forms.Panel panelTop;
         private Label labelMin;
         private Label labelEnlarge;
         private Label labelClose;
         private Label label1;
+        private Panel panelBtnsIndex;
+        private Button buttonPrevious;
+        private Button btnRemove;
+        private Button btnMenu;
+        private Panel panelMenu;
     }
 }
 

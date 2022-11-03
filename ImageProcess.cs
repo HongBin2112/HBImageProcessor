@@ -24,7 +24,7 @@ namespace projectJX_cs
 
         private string? nowConvertedImage;
         private int nowConvertedIndex;
-        private bool isGray, isColorInverted, isHFlip;
+        private bool isGray, isColorInverted, isHFlip, isSave;
         private string imageSaveFolder;
 
         private double gamma, contrast;
@@ -42,6 +42,7 @@ namespace projectJX_cs
             isGray = false;
             isColorInverted = false;
             isHFlip = false;
+            isSave = true;
             imageSaveFolder = ".";
             gamma = 1;
             contrast = 1;
@@ -65,8 +66,9 @@ namespace projectJX_cs
         {
             get { return nowConvertedIndex; }
             set { 
-                if(value < images.Count) { nowConvertedIndex = value; }
-                else { nowConvertedIndex = 0; }
+                if(value <= 0 ) { nowConvertedIndex = 0; }
+                else if (value < images.Count) { nowConvertedIndex = value; }
+                else { nowConvertedIndex = images.Count-1; }
             }
         }
 
@@ -89,6 +91,11 @@ namespace projectJX_cs
         {
             get { return isGray; }
         }
+        public bool IsSave
+        {
+            get { return isSave; }
+            set { isSave = value; }
+        }
 
         public string ImageSaveFolder
         {
@@ -110,13 +117,9 @@ namespace projectJX_cs
 
 
 
+
         // ----------Methods---------
 
-
-        private void CopyImageInputToOutput()
-        {
-            outputImage = inputImage.Copy();
-        }
 
 
         public void LoadFiles()
@@ -159,38 +162,54 @@ namespace projectJX_cs
 
 
 
-        public void LoadImage()
+        public bool LoadImage()
         {
+            bool isLoadSuccess = false;
+            if (images.Count == 0) { return false; }
+
             if (nowConvertedImage != null)
             {
                 nowConvertedImage = images[nowConvertedIndex];
                 inputImage = new Image<Bgr, byte>(imagesPath[nowConvertedImage]);
                 outputImage = inputImage.Copy();
+                isLoadSuccess = true;
+            }
+
+            return isLoadSuccess;
+        }
+
+
+        public void RemoveImage()
+        {
+            if (nowConvertedImage != null)
+            {
+                images.Remove(nowConvertedImage);
+                inputImage = null;
+                outputImage = null;
+                if (nowConvertedIndex >= images.Count) { nowConvertedIndex = 0; }
             }
         }
 
 
-
-
-
         public void CropImage(Rectangle _rect, bool enableCrop = true)
         {
-            if(_rect != null && enableCrop)
+            if(inputImage != null && enableCrop)
             {
-                Image<Bgr, byte> temp;
-                try
+                if (_rect != null)
                 {
-                    inputImage.ROI = _rect;
-                    temp = inputImage.CopyBlank();
-                    inputImage.CopyTo(temp);
-                    outputImage = temp;
-                    inputImage.ROI = Rectangle.Empty;
+                    Image<Bgr, byte> temp;
+                    try
+                    {
+                        inputImage.ROI = _rect;
+                        temp = inputImage.CopyBlank();
+                        inputImage.CopyTo(temp);
+                        outputImage = temp;
+                        inputImage.ROI = Rectangle.Empty;
+                    }
+                    catch (Exception) { outputImage = inputImage.Copy(); }
                 }
-                catch (Exception) { outputImage = inputImage.Copy(); }
+                else { outputImage = inputImage.Copy(); }
             }
-            else { outputImage = inputImage.Copy(); }
-       
-            
         }
 
 
@@ -203,10 +222,9 @@ namespace projectJX_cs
 
         public void InvertColor(bool enableInvertColor = true)
         {
-            Image<Bgr, byte> temp = outputImage.Copy();
-
             if (enableInvertColor) 
             {
+                Image<Bgr, byte> temp = outputImage.Copy();
                 CvInvoke.BitwiseNot(temp, outputImage);
                 isColorInverted = true;
             }
@@ -216,9 +234,10 @@ namespace projectJX_cs
 
         public void HFlip(bool enableFlip = true)
         {
-            Image<Bgr, byte> temp = outputImage.Copy();
+            
             if (enableFlip) 
             {
+                Image<Bgr, byte> temp = outputImage.Copy();
                 CvInvoke.Flip(temp, outputImage, Emgu.CV.CvEnum.FlipType.Horizontal);
                 isHFlip = true;
             }
@@ -251,13 +270,10 @@ namespace projectJX_cs
             string outputImageName = fi_nowConvertedImage.Name + "_converted" + fi_nowConvertedImage.Extension;
             string imageSavePath = imageSaveFolder + '\\' + outputImageName;
             if (isGray)
-            {
-                grayImage.ToBitmap().Save(imageSavePath);
-            }
+            { grayImage.ToBitmap().Save(imageSavePath);}
             else
-            {
-                outputImage.Copy().ToBitmap().Save(imageSavePath);
-            }
+            { outputImage.Copy().ToBitmap().Save(imageSavePath); }
+            isSave = true;
         }
 
 

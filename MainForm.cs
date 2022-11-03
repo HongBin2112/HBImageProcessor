@@ -13,8 +13,7 @@ using Emgu;
 using Emgu.CV;
 
 using Emgu.CV.Structure;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
-
+using HBImageProcessor;
 
 namespace projectJX_cs
 {
@@ -23,8 +22,6 @@ namespace projectJX_cs
 
         CropImage cropInputImage = new CropImage();
         ImageProcess imageProcess = new ImageProcess();
-        //FormDebug formDebug;
-        
         Rectangle cropInputRect;
 
         public MainForm()
@@ -39,20 +36,24 @@ namespace projectJX_cs
         }
 
 
-
-
-        internal Dictionary<string, string> GetDebugInfos()
+        private delegate void DelDoNext();
+        private void AskSaveBeforeDoNext(DelDoNext callback)
         {
-            Dictionary<string, string> debugInfos = new Dictionary<string, string>();
-            string strSelectedFilesPath = "Not loaded.";
-            string strNowConvertedImage = imageProcess.NowConvertedImage;
-            if (imageProcess.SelectedFilesPath != null) { strSelectedFilesPath = string.Join("$", imageProcess.SelectedFilesPath); }
-            
-            debugInfos.Add("NowConvertedImage", strNowConvertedImage);
-            debugInfos.Add("SelectedFilesPath", strSelectedFilesPath);
-            debugInfos.Add("ImageSaveFolder", imageProcess.ImageSaveFolder);
-            return debugInfos;
+            if (imageProcess.InputImage != null)
+            {
+                bool isDoNext = true;
+
+                if (imageProcess.IsSave == false)
+                { isDoNext = HBImageProcessor.UtilHBIP.IsDoNext(); }
+
+                if (isDoNext)
+                {
+                    callback();
+                    imageProcess.IsSave = true;
+                }
+            }
         }
+
 
         private void ShowLoadedImage()
         {
@@ -64,39 +65,27 @@ namespace projectJX_cs
         }
 
 
+
+
+
+
+
+
+        // event Define
         private void ChangeBackgroundColor_MouseEnter(object sender, EventArgs e)
         {
             Color dataBackgroundColor = Color.FromArgb(68,68,102);
-            if (sender is Label)
-            {
-                var senderLabel = (Label)sender;
-                senderLabel.BackColor = dataBackgroundColor;
-            }
-            else if(sender is TrackBar)
-            {
-                var senderTrackBar = (TrackBar)sender;
-                senderTrackBar.BackColor = dataBackgroundColor;
-            }
+            UtilHBIP.ChangeBackgroundColor(sender, dataBackgroundColor);
         }
         private void ChangeBackgroundColor_MouseLeave(object sender, EventArgs e)
         {
             Color dataBackgroundColor = Color.FromArgb(51, 51, 76);
-            if (sender is Label)
-            {
-                var senderLabel = (Label)sender;
-                senderLabel.BackColor = dataBackgroundColor;
-            }
-            else if (sender is TrackBar)
-            {
-                var senderTrackBar = (TrackBar)sender;
-                senderTrackBar.BackColor = dataBackgroundColor;
-            }
+            UtilHBIP.ChangeBackgroundColor(sender, dataBackgroundColor);
 
         }
 
 
-        // event Define
-
+ 
         private void loadImagesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             imageProcess.LoadFiles();
@@ -193,6 +182,8 @@ namespace projectJX_cs
 
         private void btnConverted_Click(object sender, EventArgs e)
         {
+
+
             /* Notice! the order of imageProcess like "CropImage", "ToGray", cannot be re-arranged.*/
 
 
@@ -203,7 +194,7 @@ namespace projectJX_cs
             imageProcess.InvertColor(checkedListBoxOperation.GetItemChecked(1));
             // if (Flip == true)
             imageProcess.HFlip(checkedListBoxOperation.GetItemChecked(3));
-            // Contrast
+            // Contrast, Gamma
             imageProcess.ApplyContrast();
             imageProcess.ApplyGamma();
             //Final. if (ToGray == true)!
@@ -224,6 +215,8 @@ namespace projectJX_cs
             }
 
             btnSave.Enabled = true;
+            imageProcess.IsSave = false;
+            
         }
 
 
@@ -235,37 +228,33 @@ namespace projectJX_cs
 
 
 
-        // Open New Window -> Debug From 
-        
-        /*
-        private void debugToolStripMenuItem_Click(object sender, EventArgs e)
+
+
+        private void ChangeNowConvertedIndex(bool isForward)
         {
-            formDebug = new FormDebug(this);
-            formDebug.StartPosition = this.StartPosition;
-            formDebug.Show();
-            //Application.Run(formDebug);
+
+            if(isForward) { imageProcess.NowConvertedIndex++; }
+            else { imageProcess.NowConvertedIndex--; }
+
+            imageProcess.LoadImage();
+            ShowLoadedImage();
         }
-        */
+
+
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (imageProcess.InputImage != null)
-            {
-                imageProcess.NowConvertedIndex++;
-                imageProcess.LoadImage();
-                imageBox_input.Image = imageProcess.InputImage;
-                labelName.Text = imageProcess.NowConvertedImage;
-                labelSize.Text = "Input Image Size:\n " + imageProcess.InputImage.Size.ToString();
-            }
+            DelDoNext delDoNext = () => { ChangeNowConvertedIndex(true); };
+            AskSaveBeforeDoNext(delDoNext);
         }
-
-
-
-
-        private void btnReset_Click(object sender, EventArgs e)
+        private void buttonPrevious_Click(object sender, EventArgs e)
         {
-            imageProcess.LoadImage();
-            pazPictureBox_converted.Image = null;
+            DelDoNext delDoNext = () => { ChangeNowConvertedIndex(false); };
+            AskSaveBeforeDoNext(delDoNext);
         }
+
+
+
+
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -299,7 +288,10 @@ namespace projectJX_cs
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if(imageProcess.InputImage == null) { this.Close(); }
+
+            DelDoNext delDoNext = this.Close;
+            AskSaveBeforeDoNext(delDoNext);
         }
 
         private void imageBox_input_DragEnter(object sender, DragEventArgs e)
@@ -325,19 +317,45 @@ namespace projectJX_cs
 
         private void labelEnlarge_Click(object sender, EventArgs e)
         {
-            if(this.WindowState == FormWindowState.Normal)
-            {
-                this.WindowState = FormWindowState.Maximized;
-            }
-            else
-            {
-                this.WindowState = FormWindowState.Normal;
-            }
+            if(this.WindowState == FormWindowState.Normal) {this.WindowState = FormWindowState.Maximized; }
+            else { this.WindowState = FormWindowState.Normal; }
         }
 
         private void labelMin_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+
+
+        
+
+
+
+
+        private void buttonRemove_Click(object sender, EventArgs e)
+        {
+            DelDoNext delDoNext = imageProcess.RemoveImage;
+            AskSaveBeforeDoNext(delDoNext);
+            
+            if (imageProcess.LoadImage()) 
+            {
+                ShowLoadedImage();
+            }
+            else
+            {
+                groupBoxOperation.Enabled = false;
+                cropInputImage.IsImageLoaded = false;
+
+                labelName.Text = "Load Image";
+                labelSize.Text = "";
+                labelOutputSize.Text = "";
+
+                imageBox_input.Image = null;
+                pazPictureBox_converted.Image = null;
+
+            }
+            
         }
     }
 }
