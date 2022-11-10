@@ -15,7 +15,7 @@ $\qquad$本身為程式新手，一開始開啟Visual Studio，根本不知道�
 <br> 
 
 ### * 執行檔下載(約為97MB)：
-<https://drive.google.com/file/d/1WJ4aXkFulhoBS4PaZZc39lMcqWj2pXrb/view?usp=sharing>
+無法提供。 Cannot provide.
 
 
 ### * 參考(Reference)： 
