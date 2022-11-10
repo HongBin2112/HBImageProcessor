@@ -68,7 +68,11 @@ namespace projectJX_cs
             set { 
                 if(value <= 0 ) { nowConvertedIndex = 0; }
                 else if (value < images.Count) { nowConvertedIndex = value; }
-                else { nowConvertedIndex = images.Count-1; }
+                else 
+                { 
+                    nowConvertedIndex = images.Count-1;
+                    MessageBox.Show(" The index have reached the end! ");
+                }
             }
         }
 
@@ -110,6 +114,11 @@ namespace projectJX_cs
         public double Contrast
         {
             set { contrast = value; }
+        }
+
+        public List<string> Images
+        {
+            get { return images; }
         }
 
 
@@ -186,16 +195,25 @@ namespace projectJX_cs
                 images.Remove(nowConvertedImage);
                 inputImage = null;
                 outputImage = null;
+                InitBools();
                 if (nowConvertedIndex >= images.Count) { nowConvertedIndex = 0; }
             }
+        }
+
+        public void InitBools()
+        {
+            isGray = false;
+            isColorInverted = false;
+            isHFlip = false;
+            isSave = true;
         }
 
 
         public void CropImage(Rectangle _rect, bool enableCrop = true)
         {
-            if(inputImage != null && enableCrop)
+            if(inputImage != null)
             {
-                if (_rect != null)
+                if (enableCrop)
                 {
                     Image<Bgr, byte> temp;
                     try
@@ -216,39 +234,62 @@ namespace projectJX_cs
 
         public void ToGray(bool enableToGray = true)
         {
-            isGray = enableToGray;
-            grayImage = outputImage.Copy().Convert<Gray, byte>();
+            if(outputImage != null)
+            {
+                isGray = enableToGray;
+                grayImage = outputImage.Copy().Convert<Gray, byte>();
+            }
+
         }
 
         public void InvertColor(bool enableInvertColor = true)
         {
-            if (enableInvertColor) 
+            /*if (enableInvertColor && (isColorInverted == false)) 
             {
                 Image<Bgr, byte> temp = outputImage.Copy();
                 CvInvoke.BitwiseNot(temp, outputImage);
                 isColorInverted = true;
             }
-            else if(enableInvertColor == false) { isColorInverted = false; }
-            
+            else if(enableInvertColor == false && isColorInverted)
+            {
+                Image<Bgr, byte> temp = outputImage.Copy();
+                CvInvoke.BitwiseNot(temp, outputImage);
+                isColorInverted = false; 
+            }*/
+            if (outputImage != null)
+            {
+                if (enableInvertColor)
+                {
+                    Image<Bgr, byte> temp = outputImage.Copy();
+                    CvInvoke.BitwiseNot(temp, outputImage);
+                    isColorInverted = true;
+                }
+                else { isColorInverted = false; }
+            }
+
+
         }
 
         public void HFlip(bool enableFlip = true)
         {
-            
-            if (enableFlip) 
+            if(outputImage != null)
             {
-                Image<Bgr, byte> temp = outputImage.Copy();
-                CvInvoke.Flip(temp, outputImage, Emgu.CV.CvEnum.FlipType.Horizontal);
-                isHFlip = true;
+                if (enableFlip)
+                {
+                    Image<Bgr, byte> temp = outputImage.Copy();
+                    CvInvoke.Flip(temp, outputImage, Emgu.CV.CvEnum.FlipType.Horizontal);
+                    isHFlip = true;
+                }
+                else if (enableFlip == false) { isHFlip = false; }
             }
-            else if (enableFlip == false) { isHFlip = false; }
+
         }
 
 
         public void ApplyContrast(bool enableApply = true)
         {
             double brightness = 0;
-            if (enableApply)
+            if (enableApply && outputImage != null)
             {
                 outputImage = outputImage.Mul(contrast) + brightness;
             }
@@ -256,7 +297,7 @@ namespace projectJX_cs
 
         public void ApplyGamma(bool enableApply = true)
         {
-            if (enableApply)
+            if (enableApply && outputImage!= null)
             {
                 outputImage._GammaCorrect(gamma);
             }

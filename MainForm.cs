@@ -4,9 +4,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO.IsolatedStorage;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Emgu;
@@ -15,14 +12,17 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using HBImageProcessor;
 
+
 namespace projectJX_cs
 {
     public partial class MainForm : Form
     {
 
-        CropImage cropInputImage = new CropImage();
-        ImageProcess imageProcess = new ImageProcess();
-        Rectangle cropInputRect;
+        internal CropImage cropInputImage = new CropImage();
+        internal ImageProcess imageProcess = new ImageProcess();
+        private Rectangle cropInputRect;
+
+
 
         public MainForm()
         {
@@ -189,14 +189,14 @@ namespace projectJX_cs
 
             //First. if (Crop == true)
             imageProcess.CropImage(cropInputRect, checkedListBoxOperation.GetItemChecked(2));
-
+            // Contrast, Gamma
+            imageProcess.ApplyContrast();
+            imageProcess.ApplyGamma();
             // if (Invert Color == true)
             imageProcess.InvertColor(checkedListBoxOperation.GetItemChecked(1));
             // if (Flip == true)
             imageProcess.HFlip(checkedListBoxOperation.GetItemChecked(3));
-            // Contrast, Gamma
-            imageProcess.ApplyContrast();
-            imageProcess.ApplyGamma();
+
             //Final. if (ToGray == true)!
             imageProcess.ToGray(checkedListBoxOperation.GetItemChecked(0));
 
@@ -237,12 +237,17 @@ namespace projectJX_cs
             else { imageProcess.NowConvertedIndex--; }
 
             imageProcess.LoadImage();
+            imageProcess.InitBools();
             ShowLoadedImage();
         }
 
 
         private void btnNext_Click(object sender, EventArgs e)
         {
+            btnConverted_Click(sender, e);
+            btnSave_Click(sender, e);
+
+
             DelDoNext delDoNext = () => { ChangeNowConvertedIndex(true); };
             AskSaveBeforeDoNext(delDoNext);
         }
@@ -356,6 +361,36 @@ namespace projectJX_cs
 
             }
             
+        }
+
+
+        /* 
+         Function:openChildFormInPanel(),
+         Ref:https://rjcodeadvance.com/iu-moderno-submenu-desplegable-deslizante-menu-lateral-responsivo-only-form-c-winform/ 
+        */
+        private Form? activeForm = null;
+        private void openChildFormInPanel(Form childForm, Panel targetPanel)
+        {
+            
+            if (activeForm != null)
+            {
+                activeForm.Close();
+                
+            }
+            activeForm = childForm;
+            childForm.TopLevel = false;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.Dock = DockStyle.Fill;
+            targetPanel.Controls.Add(childForm);
+            targetPanel.Tag = childForm;
+            childForm.BringToFront();
+            childForm.Show();
+        }
+
+        //FormMenu formMenu = new FormMenu(this);
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            openChildFormInPanel(new FormMenu(this), panelMenuSpace);
         }
     }
 }

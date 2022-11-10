@@ -22,7 +22,10 @@ $\qquad$本身為程式新手，一開始開啟Visual Studio，根本不知道�
 [1] [Emgucv # 24: How to crop an image using mouse selection in Emgu CV](https://youtu.be/n4mjLiMiSmw), AKHTAR JAMIL  
 [2] [Modern Flat UI, Random MultiColor, Highlight button-Active Form, WinForm, C#, V-0.1](https://youtu.be/BtOEztT1Qzk), RJ Code Advance EN  
 
+### * 特別致謝(Special thanks) :
+#### - Zhao, Jian-Xiang  
   
+
 ##  
 
 - 預覽圖：

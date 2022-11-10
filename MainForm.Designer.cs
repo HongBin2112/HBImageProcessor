@@ -55,7 +55,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.imageBox_input = new Emgu.CV.UI.ImageBox();
             this.pazPictureBox_converted = new Emgu.CV.UI.PanAndZoomPictureBox();
-            this.panelLeft = new System.Windows.Forms.Panel();
+            this.panelImageProcessing = new System.Windows.Forms.Panel();
             this.panelInfos = new System.Windows.Forms.Panel();
             this.labelOutputFolder = new System.Windows.Forms.Label();
             this.labelOutputSize = new System.Windows.Forms.Label();
@@ -69,6 +69,7 @@
             this.labelClose = new System.Windows.Forms.Label();
             this.panelMenu = new System.Windows.Forms.Panel();
             this.btnMenu = new System.Windows.Forms.Button();
+            this.panelMenuSpace = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.groupBoxOperation.SuspendLayout();
             this.panelOperationBtns.SuspendLayout();
@@ -84,10 +85,11 @@
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox_input)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pazPictureBox_converted)).BeginInit();
-            this.panelLeft.SuspendLayout();
+            this.panelImageProcessing.SuspendLayout();
             this.panelInfos.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelMenu.SuspendLayout();
+            this.panelMenuSpace.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -343,7 +345,7 @@
             this.trackBarGamma.Maximum = 200;
             this.trackBarGamma.Minimum = 1;
             this.trackBarGamma.Name = "trackBarGamma";
-            this.trackBarGamma.Size = new System.Drawing.Size(274, 45);
+            this.trackBarGamma.Size = new System.Drawing.Size(271, 45);
             this.trackBarGamma.TabIndex = 4;
             this.trackBarGamma.TickFrequency = 10;
             this.trackBarGamma.Value = 100;
@@ -371,7 +373,7 @@
             this.trackBarContrast.Location = new System.Drawing.Point(3, 24);
             this.trackBarContrast.Maximum = 200;
             this.trackBarContrast.Name = "trackBarContrast";
-            this.trackBarContrast.Size = new System.Drawing.Size(274, 45);
+            this.trackBarContrast.Size = new System.Drawing.Size(271, 45);
             this.trackBarContrast.TabIndex = 5;
             this.trackBarContrast.TickFrequency = 20;
             this.trackBarContrast.Value = 100;
@@ -458,20 +460,19 @@
             this.pazPictureBox_converted.TabIndex = 0;
             this.pazPictureBox_converted.TabStop = false;
             // 
-            // panelLeft
+            // panelImageProcessing
             // 
-            this.panelLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.panelLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.panelLeft.Controls.Add(this.groupBoxOperation);
-            this.panelLeft.Controls.Add(this.panelInfos);
-            this.panelLeft.Controls.Add(this.btnExit);
-            this.panelLeft.ForeColor = System.Drawing.Color.Gainsboro;
-            this.panelLeft.Location = new System.Drawing.Point(0, 70);
-            this.panelLeft.Margin = new System.Windows.Forms.Padding(0);
-            this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(280, 741);
-            this.panelLeft.TabIndex = 8;
+            this.panelImageProcessing.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.panelImageProcessing.Controls.Add(this.groupBoxOperation);
+            this.panelImageProcessing.Controls.Add(this.panelInfos);
+            this.panelImageProcessing.Controls.Add(this.btnExit);
+            this.panelImageProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelImageProcessing.ForeColor = System.Drawing.Color.Gainsboro;
+            this.panelImageProcessing.Location = new System.Drawing.Point(0, 0);
+            this.panelImageProcessing.Margin = new System.Windows.Forms.Padding(0);
+            this.panelImageProcessing.Name = "panelImageProcessing";
+            this.panelImageProcessing.Size = new System.Drawing.Size(280, 741);
+            this.panelImageProcessing.TabIndex = 8;
             // 
             // panelInfos
             // 
@@ -665,6 +666,18 @@
             this.btnMenu.Size = new System.Drawing.Size(47, 42);
             this.btnMenu.TabIndex = 17;
             this.btnMenu.UseVisualStyleBackColor = true;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
+            // 
+            // panelMenuSpace
+            // 
+            this.panelMenuSpace.AutoScroll = true;
+            this.panelMenuSpace.Controls.Add(this.panelImageProcessing);
+            this.panelMenuSpace.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelMenuSpace.Location = new System.Drawing.Point(0, 70);
+            this.panelMenuSpace.Margin = new System.Windows.Forms.Padding(0);
+            this.panelMenuSpace.Name = "panelMenuSpace";
+            this.panelMenuSpace.Size = new System.Drawing.Size(280, 741);
+            this.panelMenuSpace.TabIndex = 9;
             // 
             // MainForm
             // 
@@ -675,9 +688,9 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(1344, 811);
+            this.Controls.Add(this.panelMenuSpace);
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.panelLeft);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.ForeColor = System.Drawing.Color.Gainsboro;
@@ -706,13 +719,14 @@
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox_input)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pazPictureBox_converted)).EndInit();
-            this.panelLeft.ResumeLayout(false);
-            this.panelLeft.PerformLayout();
+            this.panelImageProcessing.ResumeLayout(false);
+            this.panelImageProcessing.PerformLayout();
             this.panelInfos.ResumeLayout(false);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();
+            this.panelMenuSpace.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -725,11 +739,8 @@
         private System.Windows.Forms.ToolStripMenuItem settingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem outputFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadImagesToolStripMenuItem1;
-        private Emgu.CV.UI.ImageBox imageBox_input;
-        private System.Windows.Forms.GroupBox groupBoxOperation;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private Emgu.CV.UI.PanAndZoomPictureBox pazPictureBox_converted;
-        private System.Windows.Forms.Panel panelLeft;
+        private System.Windows.Forms.Panel panelImageProcessing;
         private System.Windows.Forms.CheckedListBox checkedListBoxOperation;
         private System.Windows.Forms.Button btnConverted;
         private System.Windows.Forms.GroupBox groupBoxContrast;
@@ -758,6 +769,10 @@
         private Button btnRemove;
         private Button btnMenu;
         private Panel panelMenu;
+        private Panel panelMenuSpace;
+        internal GroupBox groupBoxOperation;
+        internal Emgu.CV.UI.ImageBox imageBox_input;
+        internal Emgu.CV.UI.PanAndZoomPictureBox pazPictureBox_converted;
     }
 }
 
